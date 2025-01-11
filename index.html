@@ -1,1 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coder IDE - Get Started</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="main-header">
+            <h1>IDE</h1>
+            <p class="mhvr" id="hvr1">File</p>
+            <p class="mhvr" id="hvr2">Edit</p>
+            <p class="mhvr" id="hvr3">Run</p>
+            <p class="mhvr" id="hvr4">Help</p>
+        </div>
+        <div class="sub-header">
+            <div class="user">
+                <img src="user.png" alt="User">
+                <h6>Loai Maklad (Admin)</h6>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="filesExp">
+
+            </div>
+            <div class="textar">
+                <div class="line-numberic"><h1 class="line">1</h1></div>
+                <textarea class="coding-side"></textarea>
+            </div>
+        </div>
+    </main>
+    <footer>
+        
+    </footer>
+</body>
+    <script>
+        let txtarea = $('.coding-side')
+        txtarea.on('keydown' ,(event)=>{
+            let lineNum = parseInt($('.line').last().text())
+            console.log(event.key)
+            if(event.key == "Enter"){
+                alert()
+                $('.line-numberic').append(`<h1 class="line">${lineNum + 1}</h1>`)
+            }
+        })
+    </script>
+
+</html>
