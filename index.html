@@ -3,53 +3,366 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coder IDE - Get Started</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer - New Project</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <header>
-        <div class="main-header">
-            <h1>IDE</h1>
-            <p class="mhvr" id="hvr1">File</p>
-            <p class="mhvr" id="hvr2">Edit</p>
-            <p class="mhvr" id="hvr3">Run</p>
-            <p class="mhvr" id="hvr4">Help</p>
+    <div class="coder_op" style="
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        align-items: center;
+        top: 0;
+        background: rgba(0, 0, 0, 0.56);
+        left: 0;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;">
+        <div style="
+        background-color: rgb(68, 67, 67);
+        width: 50%;
+        height: 93%;
+        border-radius: 5px;">
+            <div class="title" style="
+            width: 100%;
+            height: 50px;
+            display: flex;
+            margin: 12px;">
+                <p style="
+                padding: 0;
+                margin: 0;
+                font-size: 27px;
+                color: white;
+                font-family: verdana;">project.html</p>
+                <p style="    margin: 0;
+                position: absolute;
+                right: 26%;
+                color: white;
+                font-family: cursive;
+                cursor: pointer;
+                padding: 5px;
+            " class="close_coder">X</p>
+            </div>
+            <textarea class="coder_gener" style="
+            background: transparent;
+            border: 0;
+            color: white;
+            outline: 0;
+            padding: 12px;
+            font-size: 21px;"></textarea>
         </div>
-        <div class="sub-header">
-            <div class="user">
-                <img src="user.png" alt="User">
-                <h6>Loai Maklad (Admin)</h6>
+    </div>
+    <div class="big_container">
+        <div class="preview">
+            <div class="window" data-program="window:application">
+                <div class="body" style="height:100%;background:white;"></div>
             </div>
         </div>
-    </header>
-    <main>
-        <div class="container">
-            <div class="filesExp">
+        <div class="bigger">
+            <div class="c_p_s">
+                <div>
+                    <p class="code">Code</p>
+                    <p class="prop">Properties</p>
+                    <p class="secr">Selector</p>
+                </div>
+            </div>
+            <div class="selector"></div>
+            <div class="proper"></div>
+            <div class="coder">
+                <button class="_generator">Generate Code</button>
+            </div>
+            <div class="layout">
+                <h1 class="big_title">Layouts</h1>
 
             </div>
-            <div class="textar">
-                <div class="line-numberic"><h1 class="line">1</h1></div>
-                <textarea class="coding-side"></textarea>
-            </div>
         </div>
-    </main>
-    <footer>
-        
-    </footer>
+    </div>
+
 </body>
-    <script>
-        let txtarea = $('.coding-side')
-        txtarea.on('keydown' ,(event)=>{
-            let lineNum = parseInt($('.line').last().text())
-            console.log(event.key)
-            if(event.key == "Enter"){
-                alert()
-                $('.line-numberic').append(`<h1 class="line">${lineNum + 1}</h1>`)
+<script>
+    $('.html_code_generator').text('<!-- HTML Code Here !! -->\n')
+
+
+    let element_expaned;
+    $(document).ready(function () {
+
+        // Attributes applied to HTML tags
+        const htmlAttributes = [
+            "id", "class", "src", "alt", "title", "href", "name",
+            "type", "placeholder", "value", "tabindex",
+            "role", "data-usage", "data-program",
+        ];
+
+        // Static styles applied via the style attribute
+        const staticStyles = [
+            "background", "background-color", "background-image",
+            "background-position", "background-repeat", "background-size",
+            "font", "font-family", "font-size", "font-style", "font-variant",
+            "font-weight", "color", "border", "border-width", "border-color",
+            "border-radius", "margin", "margin-top", "margin-right",
+            "margin-bottom", "margin-left", "padding", "padding-top",
+            "padding-right", "padding-bottom", "padding-left", "height",
+            "width", "min-height", "min-width", "max-height", "max-width",
+            "box-shadow", "opacity", "visibility", "z-index", "display",
+            "position", "top", "right", "bottom", "left", "overflow",
+            "overflow-x", "overflow-y", "white-space", "line-height",
+            "letter-spacing", "text-align", "text-decoration",
+            "text-transform", "vertical-align", "cursor", "clip",
+            "content", "flex", "align-items", "justify-content",
+            "gap", "grid", "animation", "transition", "transform",
+            "list-style", "clip-path", "filter"
+        ];
+
+        // Actions and pseudo-classes
+        const actionSelectors = [
+            ":hover", ":focus", ":active", ":visited", ":link",
+            "::selection", ":checked", ":disabled", ":enabled",
+            ":first-child", ":last-child", ":nth-child(n)",
+            ":nth-of-type(n)", "::after", "::before"
+        ];
+
+        const dragger = {
+            "Paragraph": { name: "Paragraph", element: "p" },
+            "Div": { name: "Div", element: "div" },
+            "Heading 1": { name: "Heading 1", element: "h1" },
+            "Heading 2": { name: "Heading 2", element: "h2" },
+            "Heading 3": { name: "Heading 3", element: "h3" },
+            "Heading 4": { name: "Heading 4", element: "h4" },
+            "Heading 5": { name: "Heading 5", element: "h5" },
+            "Heading 6": { name: "Heading 6", element: "h6" },
+            "Span": { name: "Span", element: "span" },
+            "Anchor": { name: "Anchor", element: "a" },
+            "Image": { name: "Image", element: "img:notcloseable" },
+            "Ordered List": { name: "Ordered List", element: "ol" },
+            "Unordered List": { name: "Unordered List", element: "ul" },
+            "List Item": { name: "List Item", element: "li" },
+            "Table": { name: "Table", element: "table" },
+            "Table Row": { name: "Table Row", element: "tr" },
+            "Table Data": { name: "Table Data", element: "td" },
+            "Table Header": { name: "Table Header", element: "th" },
+            "Form": { name: "Form", element: "form" },
+            "Input": { name: "Input", element: "input:notcloseable" },
+            "Button": { name: "Button", element: "button" },
+            "Text Area": { name: "Text Area", element: "textarea" },
+            "Select": { name: "Select", element: "select" },
+            "Option": { name: "Option", element: "option" },
+            "Section": { name: "Section", element: "section" },
+            "Article": { name: "Article", element: "article" },
+            "Aside": { name: "Aside", element: "aside" },
+            "Footer": { name: "Footer", element: "footer" },
+            "Header": { name: "Header", element: "header" },
+            "Main": { name: "Main", element: "main" },
+            "Nav": { name: "Nav", element: "nav" },
+            "Figure": { name: "Figure", element: "figure" },
+            "Figcaption": { name: "Figcaption", element: "figcaption" },
+            "Blockquote": { name: "Blockquote", element: "blockquote" },
+            "Code": { name: "Code", element: "code" },
+            "Preformatted Text": { name: "Preformatted Text", element: "pre" },
+            "Strong": { name: "Strong", element: "strong" },
+            "Emphasis": { name: "Emphasis", element: "em" },
+            "Bold": { name: "Bold", element: "b" },
+            "Italic": { name: "Italic", element: "i" },
+            "Small": { name: "Small", element: "small" },
+            "Superscript": { name: "Superscript", element: "sup" },
+            "Subscript": { name: "Subscript", element: "sub" },
+            "Horizontal Rule": { name: "Horizontal Rule", element: "hr:notcloseable" },
+            "Break": { name: "Break", element: "br:notcloseable" },
+            "Details": { name: "Details", element: "details" },
+            "Summary": { name: "Summary", element: "summary" },
+            "Dialog": { name: "Dialog", element: "dialog" },
+            "Canvas": { name: "Canvas", element: "canvas" },
+            "SVG": { name: "SVG", element: "svg" },
+            "Video": { name: "Video", element: "video" },
+            "Audio": { name: "Audio", element: "audio" },
+            "Source": { name: "Source", element: "source:notcloseable" },
+            "Track": { name: "Track", element: "track:notcloseable" },
+            "Embed": { name: "Embed", element: "embed:notcloseable" },
+            "Object": { name: "Object", element: "object" },
+            "Iframe": { name: "Iframe", element: "iframe" }
+        };
+
+        const id = new Date().toISOString().replace(/[:.-]/g, '');
+        $('.body').attr('data-program', `element:${id}`)
+        $('.option').attr('data-program_application', `element:${id}`)
+        $('.proper').append('<p class="sub_title">Parent Selector</p>')
+        $('.proper').append(`<div class="_div_selector"><label for="parent">Select The Parent :</label><select class="parent_selector"><option class="option" data-program_selector=".window" data-program_selector="window:application">.window</option></select></div>`)
+        $('.proper').append('<p class="sub_title">Inside Element</p>')
+        $('.proper').append(`<div class="_innerText"><p>InnerText</p><input type="text" class="in_type" data-program="app:inside"></div>`)
+        $('.in_type').on('input', function () {
+            $(element_expaned).text($(this).val())
+        })
+        $('.window').children().toArray().forEach(function (e) {
+            $('.layout').append(`<div class='item' data-program_application=${$(e).data('program')}><p>${e.tagName.toLowerCase()} <p class="class_item">.${e.className}</p></p><img class="delete_el" src='./delete.png'/></div>`)
+            $('.parent_selector').append(`<option class="option" data-program_selector="${$(e).data('program')}">.${e.className}</option>`)
+        })
+        Object.values(dragger).forEach(e => {
+            $('.selector').append(`<div class="dragger" data-html="${e.element}">${e.name}</div>`);
+        });
+
+        $('.secr').css('color', 'blue')
+        $('.proper').append('<p class="sub_title">HTML Attributes (Select Element To Start)</p>')
+
+        htmlAttributes.forEach(function (e) {
+            if (e == 'data-program') {
+                $('.proper').append(`<div class="attr"><p class="hprop" data-program="program:app:${e}">${e}</p><input type="text" class="hprop_type" data-program="app:disabled" disabled></div>`)
+
+            } else {
+                $('.proper').append(`<div class="attr"><p class="hprop" data-program="program:app:${e}">${e}</p><input type="text" class="hprop_type"></div>`)
             }
         })
-    </script>
+        $('.proper').append('<p class="sub_title">Style Attributes</p>')
+
+        staticStyles.forEach(function (e) {
+            $('.proper').append(`<div class="attr"><p class="ssprop" data-program="program:app:${e}">${e}</p><input type="text" class="ssprop_type"></div>`)
+        })
+        $('.proper').append('<p class="sub_title">Action Selectors</p>')
+
+        actionSelectors.forEach(function (e) {
+            $('.proper').append(`<div class="attr"><p class="hsprop" data-program="program:app:${e}">${e}</p><input type="text" class="hsprop_type"></div>`)
+        })
+        $('.in_type').attr('disabled', 'true')
+        $('.attr').find('input').attr('disabled', 'true')
+        $('select').attr('disabled', 'true')
+        $('.parent_selector').on('change', function () {
+            let new_container = $(this).find(':selected').data('program_selector')
+            let elNew = element_expaned[0]
+            $(element_expaned).remove()
+            $(`[data-program="${new_container}"]`).append(elNew)
+
+        })
+        $('.dragger').click(function () {
+            const id = new Date().toISOString().replace(/[:.-]/g, '');
+            let _data = $(this).data('html')
+            console.log(_data.split(':notcloseable').length)
+            let _data_split = _data.split(':notcloseable')
+            if (_data_split.length < 2) {
+                $('.window').append(`<${_data} data-program="element:${id}"></${_data}>`)
+                $('.layout').append(`<div class='item' data-program_application=element:${id}><p>${_data} <p class="class_item">unclassed</p></p><img src='./delete.png' class="delete_el"/></div>`)
+                $('.parent_selector').append(`<option class="option" data-program_selector="element:${id}">unclassable ${_data}</option>`)
+
+            } else {
+                $('.window').append(`<${_data_split[0]} data-program="element:${id}" />`)
+                $('.layout').append(`<div class='item' data-program_application=element:${id}><p>${_data_split[0]}  <p class="class_item">unclassed</p></p><img src='./delete.png' class="delete_el"/></div>`)
+                $('.parent_selector').append(`<option class="option" data-program_selector="element:${id}">unclassable ${_data_split[0]} </option>`)
+
+            }
+        })
+        $(document).on('click','.delete_el',function(){
+            let data = $(this).closest('.item').data('program_application')
+            $(this).closest('.item').remove()
+            $(`[data-program="${data}"]`).remove()
+            $(`[data-program_selector="${data}"]`).remove()
+            
+        })
+        $('._generator').on('click', function () {
+            $('[data-program]').removeAttr('data-program')
+            $('[data-program_selector]').removeAttr('data-program_selector')
+            $('[data-program_application]').removeAttr('data-program_application')
+            let html_code = $('.window').html()
+
+            html_code = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+${html_code}
+</body>
+</html>`
+            console.log(html_code.trim())
+            $('.coder_gener').val(html_code.trim())
+            $('.coder_op').css('display', 'flex')
+        })
+        $('.close_coder').on('click',function(){
+            $('.coder_op').css('display','none')
+        })
+        $('.layout').on('click', '.item', function () {
+            $('.prop').css('color', 'blue')
+            $('.code').css('color', 'black')
+            $('.secr').css('color', 'black')
+            $('.proper').css('display', 'flex')
+            $('.coder').css('display', 'none')
+            $('.option').css('display', 'block')
+            $(`[data-program_selector="${$(this).data('program_application')}"]`).css('display', 'none')
+            let user_this = $(`[data-program='${$(this).data('program_application')}'`)
+            console.log(user_this)
+            element_expaned = user_this
+            $('.selector').css('display', 'none')
+            $('.hprop').toArray().forEach(function (e) {
+                let value = user_this.attr(e.textContent)
+                $(e).closest('.attr').find('input').val(value)
+
+            })
+            $('.ssprop').toArray().forEach(function (e) {
+                let value = user_this.css(e.textContent)
+                $(e).closest('.attr').find('input').val(value)
+
+            })
+            console.log(user_this.text())
+            $('.in_type').val(user_this.text())
+            $('.attr').find('input').removeAttr('disabled')
+            $('select').removeAttr('disabled')
+            $('.in_type').removeAttr('disabled')
+            $('[data-program="app:disabled"]').attr('disabled', 'true')
+
+        })
+        $(document).on('input', '.attr .hprop_type', function () {
+            console.log($(this).closest('.attr').find('p').text() == 'class')
+            console.log('element_expanded', '=', element_expaned)
+            console.log($(element_expaned).data('program'))
+            if ($(this).closest('.attr').find('p').text() == 'class') { $('.layout').find(`[data-program_application='${$(element_expaned).data('program')}']`).find('.class_item').text(`.${$(this).val()}`); $('.parent_selector').find(`[data-program_application='${$(element_expaned).data('program')}']`).text(`.${$(this).val()}`); $('.parent_selector').find(`[data-program_selector="${$(element_expaned).data('program')}"]`).text(`.${$(this).val()}`) }
+            $(element_expaned).attr($(this).closest('.attr').find('p').text(), $(this).val())
+            $('.hprop').toArray().forEach(function (e) {
+                let value = user_this.attr(e.textContent)
+                $(e).closest('.attr').find('input').val(value)
+
+            })
+
+        })
+        $(document).on('input', '.attr .ssprop_type', function () {
+            $(element_expaned).css($(this).closest('.attr').find('p').text(), $(this).val())
+            $('.ssprop').toArray().forEach(function (e) {
+                let value = $(element_expaned).css(e.textContent)
+                $(e).closest('.attr').find('input').val(value)
+
+            })
+        })
+        $('.code').click(function () {
+            $('.code').css('color', 'blue')
+            $('.secr').css('color', 'black')
+            $('.prop').css('color', 'black')
+            $('.coder').css('display', 'flex')
+            $('.selector').css('display', 'none')
+            $('.proper').css('display', 'none')
+        })
+        $('.secr').click(function () {
+            $('.secr').css('color', 'blue')
+            $('.code').css('color', 'black')
+            $('.prop').css('color', 'black')
+            $('.selector').css('display', 'flex')
+            $('.coder').css('display', 'none')
+            $('.proper').css('display', 'none')
+        })
+        $('.prop').click(function () {
+            $('.prop').css('color', 'blue')
+            $('.code').css('color', 'black')
+            $('.secr').css('color', 'black')
+            $('.proper').css('display', 'flex')
+            $('.coder').css('display', 'none')
+            $('.selector').css('display', 'none')
+        })
+
+
+    })
+
+</script>
 
 </html>
